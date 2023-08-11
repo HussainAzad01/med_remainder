@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div class="form-container">
+<form class="form" method="post">{% csrf_token %}
+    <p class="title">Register </p>
+    {% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+        <li>{% if message.tags %}
+        {% endif %}
+        {{ message }}
+        </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    <label>
+        <input type="email" class="input" name="email" required>
+        <span>Email</span>
+    </label>
+
+    <label>
+        <input type="tel" class="input" name="phone" required>
+        <span>Phone</span>
+    </label>
+
+    <label>
+        <input type="password" class="input" name="password" required>
+        <span>Password</span>
+    </label>
+    <label>
+        <input type="password" class="input" name="password_repeat" required>
+        <span>Confirm password</span>
+    </label>
+    <button class="submit">Submit</button>
+    <p class="signin">Already have an account ? <a href="/login">Login</a> </p>
+</form>
+    </div>
+</body>
+</html>

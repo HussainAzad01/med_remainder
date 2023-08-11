@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medicine Reminder Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 40px;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .title {
+            text-align: center;
+            color: royalblue;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-size: 16px;
+            color: royalblue;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+
+        button[type="submit"] {
+            background-color: royalblue;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .button-submit{
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="title">Add Your Medicine Reminder Here.</div>
+            {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+        <li>{% if message.tags %}
+            {% endif %}
+            {{ message }}
+        </li>
+            {% endfor %}
+        </ul>
+            {% endif %}
+        <form method="post">{% csrf_token %}
+<!--            <label for="first_name">First Name:</label>-->
+<!--            <input type="text" placeholder="Who's med is this, First Name" id="first_name" name="first_name" required>-->
+
+<!--            <label for="last_name">Last Name:</label>-->
+<!--            <input type="text" placeholder="Who's med is this, Last Name" id="last_name" name="last_name">-->
+
+<!--            <label for="med_name">Medicine Name:</label>-->
+<!--            <input type="text" placeholder="Name of the medicine" id="med_name" name="med_name" required>-->
+
+<!--            <label for="med_description">Medicine Description:</label>-->
+<!--            <textarea placeholder="Use of the medicine" id="med_description" name="med_description" style="height:80px;" required></textarea>-->
+
+<!--            <label>Time Slots:</label>-->
+<!--                <label><input type="datetime-local" name="morning"> Morning</label>-->
+<!--                <label><input type="datetime-local" name="noon"> Noon</label>-->
+<!--                <label><input type="datetime-local" name="evening"> Evening</label>-->
+
+<!--            <label for="remind_days">Remind Up To (days):</label>-->
+<!--            <input type="date" id="remind_days" name="remind_date" required>-->
+            {{form.as_p}}
+            <div class="button-submit">
+            <button type="submit">Create Reminder</button>
+            </div>
+        </form>
+        <a href="/remainderList">
+            <button>Back</button>
+        </a>
+    </div>
+</body>
+</html>
