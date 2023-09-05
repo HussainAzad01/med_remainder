@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-# from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext_lazy as _
 
 
@@ -13,7 +12,7 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError("The given email must be set")
         email = self.normalize_email(email)
-        # extra_fields['phone'] = extra_fields['phone']
+        extra_fields['phone'] = extra_fields['phone']
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -40,17 +39,17 @@ class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_("email address"), unique=True, blank=False)
     phone = models.CharField(max_length=20, blank=True, null=True)
+    otp = models.CharField(max_length=6, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['phone']
 
     objects = CustomUserManager()
 
 
 class MedRemainder(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
-    first_name = models.CharField(max_length=50, null=True, blank=True)
-    last_name = models.CharField(max_length=50, null=True, blank=True)
+    name = models.CharField(max_length=50, null=True, blank=True)
     med_name = models.CharField(max_length=200)
     med_description = models.CharField(max_length=500)
     time_slot_morning = models.DateTimeField(null=True, blank=True)
@@ -61,3 +60,7 @@ class MedRemainder(models.Model):
     def __str__(self):
         return self.med_name
 
+class User_Otp(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    phone_otp = models.IntegerField(max_length=8, blank=True, null=True)
+    email_otp = models.IntegerField(max_length=8, blank=True, null=True)

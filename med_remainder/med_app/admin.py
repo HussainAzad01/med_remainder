@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
-from .models import MedRemainder
+from .models import MedRemainder, User_Otp
 
 
 # over riding the default behaviour of Custom user model to looks cleaner interface
@@ -24,13 +24,14 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('email', 'password1', 'password2'),
         }),
     )
-    list_display = ('email', 'first_name', 'last_name', 'is_staff')
+    list_display = ('email', 'phone', 'first_name', 'last_name', 'is_staff')
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
 
 
 admin.site.register(get_user_model(), CustomUserAdmin)
 admin.site.register(MedRemainder)
-# and also we can write like this
+admin.site.register(User_Otp)
 
+# and also we can write like this
 # admin.site.register(settings.AUTH_USER_MODEL)

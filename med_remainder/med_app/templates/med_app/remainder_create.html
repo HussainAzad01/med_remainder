@@ -6,8 +6,8 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
-            margin: 40px;
-            padding: 40px;
+            margin: 120px;
+            padding: 80px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,24 +33,37 @@
         form {
             display: flex;
             flex-direction: column;
-            gap: 10px;
         }
 
-        label {
-            font-size: 16px;
-            color: royalblue;
-            font-weight: bold;
-        }
+         form p {
+        margin: 5px;
+    }
 
-        input[type="text"],
-        input[type="number"],
-        select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
+    form label {
+        display: block; /* Place labels on top of input elements */
+        font-size: 16px;
+        color: royalblue;
+        font-weight: bold;
+        margin-bottom: 5px; /* Add a little space below the label */
+    }
 
+    form input[type="text"],
+    form input[type="number"],
+    form select,
+    form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-bottom: 10px; /* Add space below each input element */
+    }
+
+    /* Style for submit button within form.as_p */
+    form .button-submit {
+        text-align: center;
+        margin-top: 20px;
+    }
 
         button[type="submit"] {
             background-color: royalblue;
@@ -89,25 +102,6 @@
         </ul>
             {% endif %}
         <form method="post">{% csrf_token %}
-<!--            <label for="first_name">First Name:</label>-->
-<!--            <input type="text" placeholder="Who's med is this, First Name" id="first_name" name="first_name" required>-->
-
-<!--            <label for="last_name">Last Name:</label>-->
-<!--            <input type="text" placeholder="Who's med is this, Last Name" id="last_name" name="last_name">-->
-
-<!--            <label for="med_name">Medicine Name:</label>-->
-<!--            <input type="text" placeholder="Name of the medicine" id="med_name" name="med_name" required>-->
-
-<!--            <label for="med_description">Medicine Description:</label>-->
-<!--            <textarea placeholder="Use of the medicine" id="med_description" name="med_description" style="height:80px;" required></textarea>-->
-
-<!--            <label>Time Slots:</label>-->
-<!--                <label><input type="datetime-local" name="morning"> Morning</label>-->
-<!--                <label><input type="datetime-local" name="noon"> Noon</label>-->
-<!--                <label><input type="datetime-local" name="evening"> Evening</label>-->
-
-<!--            <label for="remind_days">Remind Up To (days):</label>-->
-<!--            <input type="date" id="remind_days" name="remind_date" required>-->
             {{form.as_p}}
             <div class="button-submit">
             <button type="submit">Create Reminder</button>

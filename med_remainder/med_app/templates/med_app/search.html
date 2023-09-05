@@ -1,0 +1,29 @@
+{% extends 'med_app/base.html'%}
+
+{% block list %}
+<ul class="reminder-list">
+            {% if datas %}
+                {% for data in datas %}
+                <li class="reminder-item">
+                    <h2>{{ data.med_name }}</h2>
+                    <p><strong>Name:</strong> {{ data.name }}</p>
+                    <p><strong>Medicine Description:</strong> {{ data.med_description }}</p>
+                    <p><strong>Morning Reminder:</strong> {{ data.time_slot_morning }}</p>
+                    <p><strong>Noon Reminder:</strong> {{ data.time_slot_noon }}</p>
+                    <p><strong>Evening Reminder:</strong> {{ data.time_slot_evening }}</p>
+                    <p><strong>Remind Up To:</strong> {{ data.remind_number_days }}</p>
+                </li>
+                {% endfor %}
+            {% else %}
+                Nothing Found Here!
+            {% endif %}
+        </ul>
+{% endblock %}
+
+{% block createbutton %}
+        <div class="add-reminder-button-container">
+            <a href="/remainderCreate" class="add-reminder-button">Add Reminder</a>
+        </div>
+{% endblock %}
+
+
