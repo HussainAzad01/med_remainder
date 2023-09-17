@@ -69,7 +69,7 @@
 }
 </style>
 <body>
-<form class="form" method="post">{% csrf_token %}
+<form class="form" action="/login-otp" method="post">{% csrf_token %}
     {% if messages %}
     <ul class="messages">
     {% for message in messages %}
@@ -82,7 +82,7 @@
     {% endif %}
     <div class="title">OTP</div>
     <div class="title">Verification Code</div>
-    <p class="message">We have sent a verification code through call on your mobile number</p>
+    <p class="message">We have sent a verification code through call on your mobile number - xxxxxx{{data}}</p>
     <div class="inputs">
         <input id="input1" type="text" name="phone_otp" maxlength="4"><br>
         <input id="input2" type="text" name="email_otp" maxlength="4">

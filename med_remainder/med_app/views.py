@@ -66,12 +66,15 @@ def login_user(request):
                 phone_otp=otp,
                 email_otp=None
             )
-            return redirect('/login-otp')
+            # return redirect('/login-otp')
+            data = {'data': user.phone[-4:]}
+            return render(request, 'med_app/otp_screen.html', data)
 
     return render(request, 'med_app/login.html')
 
 
 def login_with_otp(request):
+    print(request.user)
     if request.method == "POST":
         phone_otp = request.POST.get('phone_otp')
         email_otp = request.POST.get('email_otp')
