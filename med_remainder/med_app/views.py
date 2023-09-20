@@ -6,10 +6,9 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from django.contrib.auth import authenticate, login, logout
-from datetime import datetime, timezone, date
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .helpers import send_otp
+from .helpers import send_otp, send_otp_via_email
 from django.contrib.auth.decorators import login_required
 
 
@@ -60,32 +59,35 @@ def login_user(request):
 
         elif is_user is not None:
             user = CustomUser.objects.filter(email=is_user).first()
-            otp = send_otp(user.phone)
+            phone_otp = send_otp(user.phone)
+            email_otp = send_otp_via_email(user)
             otp = User_Otp.objects.create(
                 user=user,
-                phone_otp=otp,
-                email_otp=None
+                phone_otp=phone_otp,
+                email_otp=email_otp
             )
-            # return redirect('/login-otp')
-            data = {'data': user.phone[-4:]}
+            data = {'phone': user.phone[-4:], 'email': user.email[6:]}
             return render(request, 'med_app/otp_screen.html', data)
 
     return render(request, 'med_app/login.html')
 
 
 def login_with_otp(request):
-    print(request.user)
     if request.method == "POST":
         phone_otp = request.POST.get('phone_otp')
         email_otp = request.POST.get('email_otp')
-        user = User_Otp.objects.filter(phone_otp=phone_otp).first()
-        if user is None:
+        phone_user = User_Otp.objects.filter(phone_otp=phone_otp).first()
+        email_user = User_Otp.objects.filter(email_otp=email_otp).first()
+
+
+        if phone_user is None or email_user is None:
             messages.info(request, "Otp incorrect !")
             return render(request, 'med_app/otp_screen.html')
 
-        login(request, user.user)
-        user.delete()
-        return redirect("/remainderList")
+        elif phone_user == email_user:
+            login(request, phone_user.user)
+            phone_user.delete()
+            return redirect("/remainderList")
 
     return render(request, 'med_app/otp_screen.html')
 
@@ -171,19 +173,3 @@ def searchUser(request):
         return render(request, 'med_app/search.html')
 
 
-def str_to_date(reminder_date):
-    if reminder_date == '':
-        return None
-    date_string = reminder_date
-    date_format = "%Y-%m-%d"
-    date_object = datetime.strptime(date_string, date_format).date()
-    return date_object
-
-
-def str_to_datetime(reminder_datetime):
-    if reminder_datetime == '':
-        return None
-    date_string = reminder_datetime
-    date_format = '%Y-%m-%dT%H:%M'
-    date_object = datetime.strptime(date_string, date_format)
-    return date_object

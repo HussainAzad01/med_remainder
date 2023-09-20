@@ -44,7 +44,7 @@
 }
 
 .inputs input {
-  width: 52px;
+  width: 80px;
   height: 42px;
   text-align: center;
   border: none;
@@ -82,10 +82,10 @@
     {% endif %}
     <div class="title">OTP</div>
     <div class="title">Verification Code</div>
-    <p class="message">We have sent a verification code through call on your mobile number - xxxxxx{{data}}</p>
+    <p class="message">We have sent a verification code through call on your mobile number - xxxxxx{{phone}} and on Email - xxxxxx{{email}}</p>
     <div class="inputs">
-        <input id="input1" type="text" name="phone_otp" maxlength="4"><br>
-        <input id="input2" type="text" name="email_otp" maxlength="4">
+        <input id="input1" type="text" name="phone_otp" maxlength="4" placeholder="Phone OTP" required><br>
+        <input id="input2" type="text" name="email_otp" maxlength="4" placeholder="Email OTP" required>
     </div>
     <button class="action">verify me</button>
 </form>
